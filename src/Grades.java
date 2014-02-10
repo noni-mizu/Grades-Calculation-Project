@@ -7,6 +7,10 @@ public class Grades {
 			
 		String moreGradesToCalculate;
 		String response;
+		double grades[] = new double[1000];
+		double accumulator = 0;
+		int counter = 0;
+		double average = 0;
 			
 		moreGradesToCalculate = JOptionPane.showInputDialog("Do you want to calculate a grade?");
 		moreGradesToCalculate = moreGradesToCalculate.toUpperCase();
@@ -18,29 +22,38 @@ public class Grades {
 				case 1:
 					EnglishStudent eStudent = new EnglishStudent();
 					eStudent.calculate();
-					DisplayGrade x = new DisplayGrade(eStudent.midterm, 
-						eStudent.finalExamGrade,
-						eStudent.research,
-						eStudent.presentation,
-						eStudent.finalNumericGrade,
-						eStudent.finalLetterGrade);
+					grades[counter] = eStudent.getFinalNumericGrade();
+					counter++;
+					
+					DisplayGrade x = new DisplayGrade(eStudent.getMidterm(), 
+						eStudent.getFinalExamGrade(),
+						eStudent.getResearch(),
+						eStudent.getPresentation(),
+						eStudent.getFinalNumericGrade(),
+						eStudent.getFinalLetterGrade());
 					break;
 				case 2:
 					MathStudent mStudent = new MathStudent();
 					mStudent.calculate();
-					DisplayGrade y = new DisplayGrade(mStudent.midterm,
-						mStudent.finalExamGrade,
-						mStudent.finalNumericGrade, 
-						mStudent.finalLetterGrade);
+					grades[counter] = mStudent.getFinalNumericGrade();
+					counter++;
+					
+					DisplayGrade y = new DisplayGrade(mStudent.getMidterm(),
+						mStudent.getFinalExamGrade(),
+						mStudent.getFinalNumericGrade(), 
+						mStudent.getFinalLetterGrade());
 					break;
 				case 3:
 					ScienceStudent sStudent = new ScienceStudent();
 					sStudent.calculate();
-					DisplayGrade z = new DisplayGrade(sStudent.midterm, 
-						sStudent.finalExamGrade, 
-						sStudent.research, 
-						sStudent.finalNumericGrade, 
-						sStudent.finalLetterGrade);
+					grades[counter] = sStudent.getFinalNumericGrade();
+					counter++;
+					
+					DisplayGrade z = new DisplayGrade(sStudent.getMidterm(), 
+						sStudent.getFinalExamGrade(), 
+						sStudent.getResearch(), 
+						sStudent.getFinalNumericGrade(), 
+						sStudent.getFinalLetterGrade());
 					break;
 				default:
 					JOptionPane.showMessageDialog(null, response + 
@@ -52,6 +65,13 @@ public class Grades {
 					("Do you have another grade to calculate?");
 			moreGradesToCalculate = moreGradesToCalculate.toUpperCase();
 		}//end of while
+		
+		for (int row = 0; row < counter; row++){
+			System.out.println(grades[row]);
+			accumulator = accumulator + grades[row];
+		}
+		average = accumulator / counter;
+		JOptionPane.showMessageDialog(null, "The class average is " + average);
 		
 		JOptionPane.showMessageDialog(null, 
 				"Thanks for using the Grades Calculation program!");
